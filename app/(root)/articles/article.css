@@ -1,0 +1,110 @@
+/* Article content styling */
+.article-content {
+  color: var(--foreground);
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.article-content h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1.25rem;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.5rem;
+}
+
+.article-content h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-top: 1.75rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.article-content h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: white;
+}
+
+.article-content p {
+  margin-bottom: 1.25rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.article-content ul,
+.article-content ol {
+  margin-bottom: 1.5rem;
+  margin-left: 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.article-content li {
+  margin-bottom: 0.5rem;
+}
+
+.article-content ul li {
+  list-style-type: disc;
+}
+
+.article-content ol li {
+  list-style-type: decimal;
+}
+
+.article-content strong {
+  font-weight: 600;
+  color: white;
+}
+
+.article-content blockquote {
+  border-left: 4px solid rgba(255, 255, 255, 0.2);
+  padding-left: 1rem;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.article-content a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.article-content a:hover {
+  text-decoration: none;
+}
+
+.article-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+:root[class~="light"] .article-content h2,
+:root[class~="light"] .article-content h3,
+:root[class~="light"] .article-content h4,
+:root[class~="light"] .article-content strong {
+  color: hsl(222.2, 47.4%, 11.2%);
+}
+
+:root[class~="light"] .article-content p,
+:root[class~="light"] .article-content ul,
+:root[class~="light"] .article-content ol {
+  color: hsl(222.2, 47.4%, 11.2%, 0.9);
+}
+
+:root[class~="light"] .article-content blockquote {
+  border-left-color: rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+:root[class~="light"] .article-content h2 {
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
