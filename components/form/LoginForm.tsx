@@ -358,7 +358,7 @@ function LoginForm() {
               />
             </motion.div>
             <span className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-              FinTrack
+              FTRAKT
             </span>
           </motion.div>
 
@@ -377,7 +377,7 @@ function LoginForm() {
                 transition={TEXT_TRANSITION}
                 className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent bg-[length:200%_100%]"
               >
-                FinTrack Money Manager
+                FTRAKT Money Manager
               </motion.span>
             </h1>
             <p className="text-gray-300 mb-12 text-xl leading-relaxed">

@@ -245,7 +245,7 @@ export const NavbarLogo = () => {
         height={30}
       /> */}
       <DollarSign className="h-8 w-8 text-emerald-400" />
-      <span className="text-lg font-bold text-white">FinTrack</span>
+      <span className="text-lg font-bold text-white">FTRAKT</span>
     </a>
   );
 };
