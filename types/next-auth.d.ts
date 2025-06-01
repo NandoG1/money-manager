@@ -11,4 +11,6 @@ declare module "next-auth" {
   interface Session {
     user?: User & DefaultSession["user"];
   }
+
+  // pake interface untuk menambahkan custom field ke session
 }

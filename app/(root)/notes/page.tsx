@@ -23,6 +23,12 @@ interface Note {
   isPinned: boolean;
   user: string;
 }
+interface NoteFormValuesForPage { // Or import NoteFormValues from dialog if exported
+  title: string;
+  content: string;
+  color: "blue" | "green" | "purple" | "yellow" | "red";
+  tags: string[];
+}
 
 export default function NotesPage() {
   const { toast } = useToast();
@@ -32,7 +38,7 @@ export default function NotesPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
   // Fetch notes from the API
-  useEffect(() => {
+ useEffect(() => {
     const fetchNotes = async () => {
       try {
         setLoading(true);
@@ -76,27 +82,30 @@ export default function NotesPage() {
     return format(date, "MMM d, yyyy");
   };
 
-  const handleAddNote = async (newNote: Omit<Note, "_id" | "createdAt" | "updatedAt" | "isPinned" | "user">) => {
+  const handleAddNote = async (newNoteData: NoteFormValuesForPage) => {
     try {
+      // The API call is made here, ONCE.
       const response = await fetch(`${BASE_API_URL}/api/notes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newNote),
+        body: JSON.stringify(newNoteData), // Send the data received from the dialog
       });
 
-      const data = await response.json();
+      const data = await response.json(); // This should contain the { message, note } object
 
       if (!response.ok) {
         throw new Error(data.message || "Failed to create note");
       }
 
+      // Add the newly created note (returned from the API) to the local state
       setNotes((prev) => [data.note, ...prev]);
 
       toast({
         title: "Note created",
         description: "Your note has been created successfully.",
+        variant: "success", // Use success variant
       });
     } catch (error: any) {
       console.error("Error creating note:", error);

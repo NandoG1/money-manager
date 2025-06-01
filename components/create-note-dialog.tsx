@@ -4,9 +4,9 @@ import { useState, ReactNode } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react"; // Not strictly needed here for API call
 import { useToast } from "@/components/ui/use-toast";
-import { BASE_API_URL } from "@/index";
+// import { BASE_API_URL } from "@/index"; // Not needed here for API call
 
 import {
   Dialog,
@@ -48,15 +48,16 @@ type NoteFormValues = z.infer<typeof noteFormSchema>;
 
 interface CreateNoteDialogProps {
   children: ReactNode;
-  onCreateNote: (newNote: Omit<NoteFormValues, "id" | "date" | "isPinned">) => void;
+  // This function will now expect the data and handle the API call and state update
+  onCreateNote: (newNoteData: NoteFormValues) => Promise<void>;
 }
 
 export function CreateNoteDialog({ children, onCreateNote }: CreateNoteDialogProps) {
   const [open, setOpen] = useState(false);
   const [tagInput, setTagInput] = useState("");
   const { toast } = useToast();
-  const session = useSession();
-  
+  // const session = useSession(); // Not making the API call here directly
+
   const form = useForm<NoteFormValues>({
     resolver: zodResolver(noteFormSchema),
     defaultValues: {
@@ -89,47 +90,28 @@ export function CreateNoteDialog({ children, onCreateNote }: CreateNoteDialogPro
     }
   };
 
+  // This onSubmit now just calls the prop function
   const onSubmit = async (data: NoteFormValues) => {
     try {
-      const response = await fetch(`${BASE_API_URL}/api/notes`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title: data.title,
-          content: data.content,
-          tags: data.tags,
-          color: data.color,
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Failed to create note");
-      }
-
-      onCreateNote({
-        title: data.title,
-        content: data.content,
-        tags: data.tags,
-        color: data.color,
-      });
+      // Directly call the onCreateNote prop passed from NotesPage
+      // This prop (handleAddNote in NotesPage) will handle the API call
+      await onCreateNote(data);
 
       form.reset();
       setOpen(false);
-
-      toast({
-        title: "Success",
-        description: "Note created successfully",
-        variant: "success",
-      });
+      // Toast for success can be shown here or in NotesPage after API success
+      // toast({
+      //   title: "Success",
+      //   description: "Note creation initiated.", // Or wait for NotesPage to confirm
+      //   variant: "success",
+      // });
     } catch (error: any) {
-      console.error("Error creating note:", error);
+      // This catch might not be strictly necessary if NotesPage handles all errors
+      // But good for local form issues if any were to arise before calling onCreateNote
+      console.error("Error in dialog submission process:", error);
       toast({
         title: "Error",
-        description: error.message || "Failed to create note",
+        description: error.message || "Failed to submit note data.",
         variant: "destructive",
       });
     }
